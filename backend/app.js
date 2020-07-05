@@ -1,10 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const path = require("path");
 const mongoose = require("mongoose");
+
 const app = express();
-const postRoutes = require('./routes/posts');
+
+const postRoutes = require("./routes/posts");
 
 mongoose
   .connect(
@@ -19,6 +21,12 @@ mongoose
     console.log("Connection failed!");
   });
 
+
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use("/images", express.static(path.join("backend/")));
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -31,10 +39,8 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/posts", postRoutes)
+
+app.use("/posts", postRoutes);
 
 module.exports = app;
