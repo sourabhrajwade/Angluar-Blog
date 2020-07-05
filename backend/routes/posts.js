@@ -38,7 +38,7 @@ multer({ storage }).single("image"),
     _id: req.body.id,
     title: req.body.title,
     content: req.body.content,
-    imagePath: url + "/image" + req.file.filename,
+    imagePath: url + "/images/" + req.file.filename,
   });
   post.save().then((createdPost) => {
     res.status(201).json({
