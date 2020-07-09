@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 const postRoutes = require("./routes/posts");
+const userRoutes = require('./routes/user');
 
 mongoose
   .connect(
@@ -42,5 +43,6 @@ app.use((req, res, next) => {
 
 
 app.use("/posts", postRoutes);
+app.use("/user", userRoutes);
 
 module.exports = app;

@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="loginForm" (submit)="onLogin()"  *ngIf="!isLoading">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        name="email"
+        formControlName="email"
+        placeholder="Enter email"
+      required
+      email
+      />
+      <mat-error *ngIf="loginForm.get('email').invalid">Please enter a valid email</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+      matInput
+      type="password"
+      name="password"
+      formControlName="password"
+      placeholder="Enter password"
+      required
+    />
+      <mat-error *ngIf="loginForm.get('password').invalid">Please enter password consist of minimum 6 character</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="accent" type="submit" >Login</button>
+  </form>
+</mat-card>
