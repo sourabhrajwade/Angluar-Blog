@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-
+const bcrypt = require('bcrypt');
 const Post = require("../models/post");
 const Auth = require('../middleware/autherization');
 

@@ -1,10 +1,10 @@
 const express = require("express");
-const bcrpyt = require("bcrypt");
-const hwt = require("jsonwebtoken");
+const bcrpyt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
-const multer = require("multer");
+// const multer = require("multer");
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.post("/signup", (req, res, next) => {
   bcrpyt.hash(req.body.password, 10).then((hash) => {
     const user = new User({
       email: req.body.email,
-      password: hash,
+      password: hash
     });
     user
       .save()
@@ -23,6 +23,7 @@ router.post("/signup", (req, res, next) => {
         });
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).json({
           error: err,
         });
@@ -32,7 +33,7 @@ router.post("/signup", (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
   let fetchedUser;
-  User.findOne({ email }).then((user) => {
+  User.find({ email: req.body.email }).then((user) => {
     if (!user) {
       return res.status(401).json({
         message: "Auth failed",
@@ -53,10 +54,12 @@ router.post("/login", (req, res, next) => {
           { expiresIn: "1h" }
         );
         res.status(200).json({
-          token
+          token: token,
+          expiresIn: 3600,
         })
       })
       .catch((err) => {
+        console.log(err);
         return res.status(401).json({
           message: "Auth failed",
         });

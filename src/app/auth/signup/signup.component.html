@@ -24,7 +24,8 @@
     />
       <mat-error *ngIf="signupForm.get('password').invalid">Please enter password consist of minimum 6 character</mat-error>
     </mat-form-field>
-    <button mat-raised-button color="accent" type="submit" >Signup</button>
+    <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Signup</button>
+
   </form>
 </mat-card>
 
