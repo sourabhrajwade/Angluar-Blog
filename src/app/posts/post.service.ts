@@ -51,6 +51,7 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string;
+      creator: string;
     }>(`http://localhost:5000/posts/${id}`);
   }
 
@@ -84,6 +85,7 @@ export class PostsService {
         title,
         content,
         imagePath: image,
+        creator: null
       };
     }
     this.http

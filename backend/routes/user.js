@@ -1,5 +1,5 @@
 const express = require("express");
-const bcrpyt = require('bcrypt');
+const bcrpyt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
@@ -33,7 +33,7 @@ router.post("/signup", (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
   let fetchedUser;
-  User.find({ email: req.body.email }).then((user) => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (!user) {
       return res.status(401).json({
         message: "Auth failed",
@@ -56,6 +56,7 @@ router.post("/login", (req, res, next) => {
         res.status(200).json({
           token: token,
           expiresIn: 3600,
+          userId: fetchedUser._id
         })
       })
       .catch((err) => {
